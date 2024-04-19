@@ -29,13 +29,13 @@ function main() {
 	camera.position.set(0,10,20);
 
 	//Set the OrobitControls for our mouse to rotate the scene
-	const controls = new OrbitControls( camera, canvas );
-	controls.target.set( 0, 5, 0 );
-	controls.update();
+	//const controls = new OrbitControls( camera, canvas );
+	//controls.target.set( 0, 5, 0 );
+	//controls.update();
 
     //Create a scene for putting our cubes
 	const scene = new THREE.Scene();
-	scene.background = new THREE.Color( 'black' );
+	//scene.background = new THREE.Color( 'black' );
 
     //Add a Light to our scene
     {
