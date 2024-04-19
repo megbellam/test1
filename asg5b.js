@@ -181,7 +181,7 @@ function main() {
 			//We are multiplying by 1.2 to give us 20% more size above and below the box
 			//when trying to fit it into our frustum
 			//XXXX-----------------
-			frameArea(boxForSizing * 1.2, boxForSizing, boxCenter, camera);
+			//frameArea(boxForSizing * 1.2, boxForSizing, boxCenter, camera);
 
 			// update the OrbitControls Trackball controls to handle the new size
 			// The Trackball Controls are set so the camera will orbit the center of the scene
