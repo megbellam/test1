@@ -133,7 +133,7 @@ function main() {
 			root.position.y = -1;
 			const boxForSizing = new THREE.Box3().setFromObject(root);
 			const boxSize = boxForSizing.getSize(new THREE.Vector3()).length();
-			const boxCenter = box.getCenter(new THREE.Vector3());
+			const boxCenter = boxForSizing.getCenter(new THREE.Vector3());
 			console.log(boxSize);
 			console.log(boxCenter);
 
