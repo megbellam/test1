@@ -26,7 +26,7 @@ function main() {
     //The Camera sits on the +Z axis and looks towards the -Z axis, with +Y being up
     //As we put our object (a cube) at the origin, we are going to set the camera Z position to 2
     //so that the camera can see the cube.
-	camera.position.z = 2;
+	camera.position.set(0,10,20);
 
     //Create a scene for putting our cubes
 	const scene = new THREE.Scene();
