@@ -27,6 +27,10 @@ function main() {
     //As we put our object (a cube) at the origin, we are going to set the camera Z position to 2
     //so that the camera can see the cube.
 	camera.position.set(0,10,20);
+	//Set the OrobitControls for our mouse to rotate the scene
+	const controls = new OrbitControls( camera, canvas );
+	controls.target.set( 0, 5, 0 );
+	controls.update();
 
 
     //Create a scene for putting our cubes
