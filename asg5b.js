@@ -26,18 +26,10 @@ function main() {
     //The Camera sits on the +Z axis and looks towards the -Z axis, with +Y being up
     //As we put our object (a cube) at the origin, we are going to set the camera Z position to 2
     //so that the camera can see the cube.
-	camera.position.set(0,10,20);
-
-	//XXXX-----------------
-	//Set the OrobitControls for our mouse to rotate the scene
-	//const controls = new OrbitControls( camera, canvas );
-	//controls.target.set( 0, 5, 0 );
-	//controls.update();
+	camera.position.z = 2;
 
     //Create a scene for putting our cubes
 	const scene = new THREE.Scene();
-	//XXXX-----------------
-	//scene.background = new THREE.Color( 'black' );
 
     //Add a Light to our scene
     {
@@ -126,7 +118,8 @@ function main() {
 
 	];
 
-	
+	{
+
 		const objLoader = new OBJLoader();
 		const mtlLoader = new MTLLoader();
   		mtlLoader.load('https://megbellam.github.io/test/necklace.mtl', (mtl) => {
@@ -138,36 +131,9 @@ function main() {
 			scene.add( root );
 			root.position.x = 2.5;
 			root.position.y = -1;
-			//The above object may not show up properly in our scene
-			//as our scene box size may be too small or the object being loaded may be too small to be seen
-			//Let us find out the size of the box that contains our scene
-			const boxForSizing = new THREE.Box3().setFromObject(root);
-			//Get the lenght of the box for our scene
-			const boxLength = boxForSizing.getSize(new THREE.Vector3()).length();
-			//Let us get the Center of our scene box
-			const boxCenter = boxForSizing.getCenter(new THREE.Vector3());
-			console.log(boxLength);
-			console.log(boxCenter);
-			//If length shows as 15 and center is at 2.5, -1, 0
-			//And so our Frustum (what the camera is showing) may be too small to show an obj that needs a box of size 15
-
-			//Set the camera to frame this box
-			//We are multiplying by 1.2 to give us 20% more size above and below the box
-			//when trying to fit it into our frustum
-			//XXXX-----------------
-			//frameArea(boxForSizing * 1.2, boxForSizing, boxCenter, camera);
-
-			// update the OrbitControls Trackball controls to handle the new size
-			// The Trackball Controls are set so the camera will orbit the center of the scene
-			//controls.maxDistance = boxForSizing * 10;
-			//controls.target.copy(boxCenter);
-			//controls.update();
 
 		} );
-
    		});
-
-
 
 	}
 
