@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
 
-console.log("Version 2"); //Use this to see if the correct file is being loaded
+console.log("Version 1"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -208,7 +208,7 @@ function main() {
 		objLoader.load( 'https://megbellam.github.io/test/necklace.obj', ( root ) => {
 			scene.add( root );
 			//As the necklace is very large, scale it down so that it will fit better
-			root.scale.setScalar(.2);
+			root.scale.setScalar(.15);
 			//root.position.x = 2.5;
 			//root.position.y = -1;
 
