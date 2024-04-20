@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
 
-console.log("Version 1"); //Use this to see if the correct file is being loaded
+console.log("Version 2"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -80,9 +80,9 @@ function main() {
         const color = 0xFFFFFF;
 		const intensity = 3;
 		const light = new THREE.DirectionalLight( color, intensity );
-        //Position of the light is -1,2,4 to the left, above and behind our camera. Target is 0,0,0
-		light.position.set( - 1, 2, 4 );
+		light.position.set( 5,10,2 );
 		scene.add( light );
+		scene.add( light.target );
     }
 
 	const boxWidth = .5;
