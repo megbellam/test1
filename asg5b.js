@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
 
-console.log("Version 2"); //Use this to see if the correct file is being loaded
+console.log("Version 1"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -66,7 +66,9 @@ function main() {
 	}
 
 	{
-		//Color the sky and the ground
+		//Color the checkered Ground Plane that is pointing towards the sky in blue
+		//Color the checkered Ground Plane that is pointing towards the ground in brownish orange
+		//So the bottom part of the checked Ground Plane will look orangish
 		const skyColor = 0xB1E1FF; // light blue
 		const groundColor = 0xB97A20; // brownish orange
 		const intensity = 2;
@@ -84,6 +86,34 @@ function main() {
 		scene.add( light );
 		scene.add( light.target );
     }
+
+	//a function that will compute distance and then move the camera that 
+	//distance units from the center of the box. After doing this we should
+	//point the camera at the center of the box, which will do later
+	function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
+
+		const halfSizeToFitOnScreen = sizeToFitOnScreen * 0.5;
+		const halfFovY = THREE.MathUtils.degToRad( camera.fov * .5 );
+		const distance = halfSizeToFitOnScreen / Math.tan( halfFovY );
+		// compute a unit vector that points in the direction the camera is now
+		// from the center of the box
+		const direction = ( new THREE.Vector3() ).subVectors( camera.position, boxCenter ).normalize();
+
+		// move the camera to a position distance units way from the center
+		// in whatever direction the camera was from the center already
+		camera.position.copy( direction.multiplyScalar( distance ).add( boxCenter ) );
+
+		// pick some near and far values for the frustum that
+		// will contain the box.
+		camera.near = boxSize / 100;
+		camera.far = boxSize * 100;
+
+		camera.updateProjectionMatrix();
+
+		// point the camera to look at the center of the box
+		camera.lookAt( boxCenter.x, boxCenter.y, boxCenter.z );
+
+	}
 
 	const boxWidth = .5;
 	const boxHeight = .5;
