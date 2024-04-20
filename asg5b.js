@@ -99,7 +99,10 @@ function main() {
 		const distance = halfSizeToFitOnScreen / Math.tan( halfFovY );
 		// compute a unit vector that points in the direction the camera is now
 		// from the center of the box
-		const direction = ( new THREE.Vector3() ).subVectors( camera.position, boxCenter ).normalize();
+		const direction = ( new THREE.Vector3() )
+			.subVectors( camera.position, boxCenter )
+			.multiply( new THREE.Vector3( 1, 0, 1 ) )
+			.normalize();
 
 		// move the camera to a position distance units way from the center
 		// in whatever direction the camera was from the center already
