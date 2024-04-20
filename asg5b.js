@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
 
-console.log("Version 1"); //Use this to see if the correct file is being loaded
+console.log("Version 2"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -87,7 +87,9 @@ function main() {
 		scene.add( light.target );
     }
 
-	//a function that will compute distance and then move the camera that 
+	//We need to compute how far way the camera should be from the objects in our scene
+	//so that they all appear inside the frustum and are visible to us
+	//This is a function that will compute distance and then move the camera that 
 	//distance units from the center of the box. After doing this we should
 	//point the camera at the center of the box, which will do later
 	function frameArea( sizeToFitOnScreen, boxSize, boxCenter, camera ) {
@@ -201,10 +203,28 @@ function main() {
     		objLoader.setMaterials(mtl);
 
 		objLoader.load( 'https://megbellam.github.io/test/necklace.obj', ( root ) => {
-			root.scale.setScalar(.5);
 			scene.add( root );
-			root.position.x = 2.5;
-			root.position.y = -1;
+			//compute a theoretical box that contains all the stuff from this root
+			//object and below
+			const box = new THREE.Box3().setFromObject(root);
+
+			const boxSize = box.getSize(new THREE.Vector3()).length();
+    		const boxCenter = box.getCenter(new THREE.Vector3());
+
+			// set the camera to frame the box
+			// By multiplying with 1.2 we give us 20% more space above 
+			// and below the box when trying to fit it inside the frustum
+			frameArea(boxSize * 1.2, boxSize, boxCenter, camera);
+
+			// update the Trackball controls to handle the new size
+			// We are doing it so the camera will orbit the center of the scene
+			controls.maxDistance = boxSize * 10;
+			controls.target.copy(boxCenter);
+			controls.update();
+
+			//root.scale.setScalar(.5);
+			//root.position.x = 2.5;
+			//root.position.y = -1;
 
 		} );
    		});
