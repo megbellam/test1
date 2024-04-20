@@ -13,9 +13,9 @@ function main() {
 	const renderer = new THREE.WebGLRenderer( { antialias: true, canvas } );
 
     //Camera param: The Field of View is 75 Degrees in the vertical dimension
-	const fov = 45;
+	const fov = 90;
     //Camera param: The default Canvas aspect ratio is (default canvas size = 300x150 pixels) 300/150 = 2
-	const aspect = 2;
+	const aspect = 4;
     //Camera param: Near and far give the space in front of the camera that will be rendered
     //Anything before or after that range will be clipped
 	const near = 0.1;
