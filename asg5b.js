@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
 
-console.log("Version 1.2"); //Use this to see if the correct file is being loaded
+console.log("Version 1"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -40,6 +40,7 @@ function main() {
 	scene.background = new THREE.Color( 'black' );
 
 	//Load the checkered Plane that forms the floor
+	//This plane is being drawn through X-Axis, going along Z axis, so up is +Y
 	{
 
 		const planeSize = 40;
@@ -61,6 +62,16 @@ function main() {
 		const mesh = new THREE.Mesh( planeGeo, planeMat );
 		mesh.rotation.x = Math.PI * - .5;
 		scene.add( mesh );
+
+	}
+
+	{
+		//Color the sky and the ground
+		const skyColor = 0xB1E1FF; // light blue
+		const groundColor = 0xB97A20; // brownish orange
+		const intensity = 2;
+		const light = new THREE.HemisphereLight( skyColor, groundColor, intensity );
+		scene.add( light );
 
 	}
 
