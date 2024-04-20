@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
-import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
+import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 1"); //Use this to see if the correct file is being loaded
+console.log("Version 2"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -29,6 +30,44 @@ function main() {
     //As we put our object (a cube) at the origin, we are going to set the camera Z position to 2
     //so that the camera can see the cube.
 	camera.position.set(0,10,20); //0, 10, 20
+
+	//MinMaxGUIHelper for the near and far settings so far is always greater than near.
+	//It will have min and max properties that lil-gui will adjust. 
+	//When adjusted they'll set the 2 properties we specify.
+	class MinMaxGUIHelper {
+		constructor(obj, minProp, maxProp, minDif) {
+		  this.obj = obj;
+		  this.minProp = minProp;
+		  this.maxProp = maxProp;
+		  this.minDif = minDif;
+		}
+		get min() {
+		  return this.obj[this.minProp];
+		}
+		set min(v) {
+		  this.obj[this.minProp] = v;
+		  this.obj[this.maxProp] = Math.max(this.obj[this.maxProp], v + this.minDif);
+		}
+		get max() {
+		  return this.obj[this.maxProp];
+		}
+		set max(v) {
+		  this.obj[this.maxProp] = v;
+		  this.min = this.min;  // this will call the min setter
+		}
+	  }
+
+	//Update the camera based on the GUI updates
+	function updateCamera() {
+		camera.updateProjectionMatrix();
+	}
+
+	const gui = new GUI();
+	gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
+	const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
+	gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
+	gui.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera);
+
 	//Set the OrobitControls for our mouse to rotate the scene
 	const controls = new OrbitControls( camera, canvas );
 	controls.target.set( 0, 5, 0 );
