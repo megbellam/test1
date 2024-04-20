@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 2"); //Use this to see if the correct file is being loaded
+console.log("Version 1"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -30,6 +30,9 @@ function main() {
     //As we put our object (a cube) at the origin, we are going to set the camera Z position to 2
     //so that the camera can see the cube.
 	camera.position.set(0,10,20); //0, 10, 20
+
+	//A second perspective camera
+	const cameraHelper = new THREE.CameraHelper( camera );
 
 	//MinMaxGUIHelper for the near and far settings so far is always greater than near.
 	//It will have min and max properties that lil-gui will adjust. 
@@ -62,6 +65,7 @@ function main() {
 		camera.updateProjectionMatrix();
 	}
 
+	//Setup three user GUI bars for controlling fov, near and far parameters of the camera
 	const gui = new GUI();
 	gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
 	const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
@@ -73,10 +77,24 @@ function main() {
 	controls.target.set( 0, 5, 0 );
 	controls.update();
 
+	//2nd camera
+	const camera2 = new THREE.PerspectiveCamera(
+		60, // fov
+		2, // aspect
+		0.1, // near
+		500, // far
+	);
+	camera2.position.set( 40, 10, 30 );
+	camera2.lookAt( 0, 5, 0 );
+
+	const controls2 = new OrbitControls( camera2, view2Elem );
+	controls2.target.set( 0, 5, 0 );
+	controls2.update();
 
     //Create a scene for putting our cubes
 	const scene = new THREE.Scene();
 	scene.background = new THREE.Color( 'black' );
+	scene.add( cameraHelper );
 
 	//Load the checkered Plane that forms the floor
 	//This plane is being drawn through X-Axis, going along Z axis, so up is +Y
