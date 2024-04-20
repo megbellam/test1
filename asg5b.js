@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 1"); //Use this to see if the correct file is being loaded
+console.log("Version 3"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -12,6 +12,10 @@ console.log("Version 1"); //Use this to see if the correct file is being loaded
 function main() {
     //Find the canvas ID we are using: id is "c"
 	const canvas = document.querySelector( '#c' );
+	//Adding second view for 2nd camera
+	const view1Elem = document.querySelector( '#view1' );
+	const view2Elem = document.querySelector( '#view2' );
+
     //Create the renderer that renders our data into this canvas
 	const renderer = new THREE.WebGLRenderer( { antialias: true, canvas } );
 
@@ -73,7 +77,7 @@ function main() {
 	gui.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera);
 
 	//Set the OrobitControls for our mouse to rotate the scene
-	const controls = new OrbitControls( camera, canvas );
+	const controls = new OrbitControls( camera, view1Elem );
 	controls.target.set( 0, 5, 0 );
 	controls.update();
 
