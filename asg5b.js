@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
-console.log("Version 1.1"); //Use this to see if the correct file is being loaded
+
+console.log("Version 1.2"); //Use this to see if the correct file is being loaded
+
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
 //We have to upload our code to a server if we use modules in our code
@@ -13,13 +15,13 @@ function main() {
 	const renderer = new THREE.WebGLRenderer( { antialias: true, canvas } );
 
     //Camera param: The Field of View is 75 Degrees in the vertical dimension
-	const fov = 90;
+	const fov = 45;
     //Camera param: The default Canvas aspect ratio is (default canvas size = 300x150 pixels) 300/150 = 2
-	const aspect = 4;
+	const aspect = 2;
     //Camera param: Near and far give the space in front of the camera that will be rendered
     //Anything before or after that range will be clipped
-	const near = 1;
-	const far = 50;
+	const near = 0.1;
+	const far = 100;
     //Create a Camera to display the scene
 	const camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
 
@@ -35,6 +37,32 @@ function main() {
 
     //Create a scene for putting our cubes
 	const scene = new THREE.Scene();
+	scene.background = new THREE.Color( 'black' );
+
+	//Load the checkered Plane that forms the floor
+	{
+
+		const planeSize = 40;
+
+		const loader = new THREE.TextureLoader();
+		const texture = loader.load( 'https://threejs.org/manual/examples/resources/images/checker.png' );
+		texture.colorSpace = THREE.SRGBColorSpace;
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+		texture.magFilter = THREE.NearestFilter;
+		const repeats = planeSize / 2;
+		texture.repeat.set( repeats, repeats );
+
+		const planeGeo = new THREE.PlaneGeometry( planeSize, planeSize );
+		const planeMat = new THREE.MeshPhongMaterial( {
+			map: texture,
+			side: THREE.DoubleSide,
+		} );
+		const mesh = new THREE.Mesh( planeGeo, planeMat );
+		mesh.rotation.x = Math.PI * - .5;
+		scene.add( mesh );
+
+	}
 
     //Add a Light to our scene
     {
