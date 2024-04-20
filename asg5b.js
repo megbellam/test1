@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
-console.log("Version 1.1"); //Use this to see if the correct file is being loaded
+console.log("Version 1.2"); //Use this to see if the correct file is being loaded
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
 //We have to upload our code to a server if we use modules in our code
@@ -26,7 +26,7 @@ function main() {
     //The Camera sits on the +Z axis and looks towards the -Z axis, with +Y being up
     //As we put our object (a cube) at the origin, we are going to set the camera Z position to 2
     //so that the camera can see the cube.
-	camera.position.set(0,0,-2); //0, 10, 20
+	camera.position.set(0,10,20); //0, 10, 20
 	//Set the OrobitControls for our mouse to rotate the scene
 	const controls = new OrbitControls( camera, canvas );
 	controls.target.set( 0, 5, 0 );
