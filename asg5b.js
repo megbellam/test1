@@ -359,7 +359,8 @@ function main() {
 		renderer.setScissorTest( true );
 
 		//Render the original FIRST VIEW
-		const aspect = setScissorForElement( view1Elem );
+		{
+			const aspect = setScissorForElement( view1Elem );
 
 			// adjust the camera for this aspect
 			camera.aspect = aspect;
