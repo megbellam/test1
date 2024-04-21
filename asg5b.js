@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 2"); //Use this to see if the correct file is being loaded
+console.log("Version 1"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -20,7 +20,7 @@ function main() {
 	const renderer = new THREE.WebGLRenderer( { antialias: true, canvas } );
 
     //Camera param: The Field of View is 75 Degrees in the vertical dimension
-	const fov = 70;
+	const fov = 45;
     //Camera param: The default Canvas aspect ratio is (default canvas size = 300x150 pixels) 300/150 = 2
 	const aspect = 2;
     //Camera param: Near and far give the space in front of the camera that will be rendered
@@ -129,6 +129,21 @@ function main() {
 		scene.add( amblight );
 	}
 	
+	//Skybox - a background box that uses an image - in our case taken by a 360 degree camera
+	{
+
+		const loader = new THREE.TextureLoader();
+		const texture = loader.load(
+			'https://threejs.org/manual/examples/resources/images/equirectangularmaps/tears_of_steel_bridge_2k.jpg',
+			() => {
+
+				texture.mapping = THREE.EquirectangularReflectionMapping;
+				texture.colorSpace = THREE.SRGBColorSpace;
+				scene.background = texture;
+
+			} );
+
+	}
 
 	//Load the checkered Plane that forms the floor
 	//This plane is being drawn through X-Axis, going along Z axis, so up is +Y
