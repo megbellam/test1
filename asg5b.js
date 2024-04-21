@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 1"); //Use this to see if the correct file is being loaded
+console.log("Version 2"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -20,7 +20,7 @@ function main() {
 	const renderer = new THREE.WebGLRenderer( { antialias: true, canvas } );
 
     //Camera param: The Field of View is 75 Degrees in the vertical dimension
-	const fov = 45;
+	const fov = 70;
     //Camera param: The default Canvas aspect ratio is (default canvas size = 300x150 pixels) 300/150 = 2
 	const aspect = 2;
     //Camera param: Near and far give the space in front of the camera that will be rendered
@@ -72,12 +72,12 @@ function main() {
 	//Setup three user GUI bars for controlling fov, near and far parameters of the camera
 	const gui = new GUI();
 	//gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
-	gui.add(camera, 'fov', 1, 180);
+	gui.add(camera, 'fov', 1, 180).name('Camera FOV');
 	const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
 	//gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
 	//gui.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera);
-	gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near');
-	gui.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far');
+	gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('Camera near');
+	gui.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('Camera far');
 
 	//Set the OrobitControls for our mouse to rotate the scene
 	const controls = new OrbitControls( camera, view1Elem );
@@ -125,7 +125,7 @@ function main() {
 
 		//const gui = new GUI();
 		gui.addColor( new ColorGUIHelper( amblight, 'color' ), 'value' ).name( 'Ambient color' );
-		gui.add( amblight, 'intensity', 0, 5, 0.01 );
+		gui.add( amblight, 'intensity', 0, 5, 0.01 ).name( 'Ambient intensity' );
 		scene.add( amblight );
 	}
 	
