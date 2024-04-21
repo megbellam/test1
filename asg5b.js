@@ -96,8 +96,7 @@ function main() {
 	{
 		const color = 0xFFFFFF;
 		const intensity = 1;
-		const light = new THREE.AmbientLight( color, intensity );
-		scene.add( light );
+		const amblight = new THREE.AmbientLight( color, intensity );
 
 		//const gui = new GUI();
 		gui.addColor( new ColorGUIHelper( light, 'color' ), 'value' ).name( 'Ambient color' );
@@ -127,6 +126,9 @@ function main() {
 	const scene = new THREE.Scene();
 	scene.background = new THREE.Color( 'black' );
 	scene.add( cameraHelper );
+
+	//Add the ambient light defined above
+	scene.add( amblight );
 
 	//Load the checkered Plane that forms the floor
 	//This plane is being drawn through X-Axis, going along Z axis, so up is +Y
