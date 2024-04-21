@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 2"); //Use this to see if the correct file is being loaded
+console.log("Version 3"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -99,8 +99,8 @@ function main() {
 		const amblight = new THREE.AmbientLight( color, intensity );
 
 		//const gui = new GUI();
-		gui.addColor( new ColorGUIHelper( light, 'color' ), 'value' ).name( 'Ambient color' );
-		gui.add( light, 'intensity', 0, 5, 0.01 );
+		gui.addColor( new ColorGUIHelper( amblight, 'color' ), 'value' ).name( 'Ambient color' );
+		gui.add( amblight, 'intensity', 0, 5, 0.01 );
 	}
 
 	//Set the OrobitControls for our mouse to rotate the scene
