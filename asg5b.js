@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 4"); //Use this to see if the correct file is being loaded
+console.log("Version 1"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -78,6 +78,31 @@ function main() {
 	//gui.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera);
 	gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near');
 	gui.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far');
+
+	//Adding Ambient Light and controls for it
+	class ColorGUIHelper {
+		constructor( object, prop ) {
+			this.object = object;
+			this.prop = prop;
+		}
+		get value() {
+			return `#${this.object[ this.prop ].getHexString()}`;
+		}
+		set value( hexString ) {
+			this.object[ this.prop ].set( hexString );
+		}
+	}
+
+	{
+		const color = 0xFFFFFF;
+		const intensity = 1;
+		const light = new THREE.AmbientLight( color, intensity );
+		scene.add( light );
+
+		//const gui = new GUI();
+		gui.addColor( new ColorGUIHelper( light, 'color' ), 'value' ).name( 'Ambient color' );
+		gui.add( light, 'intensity', 0, 5, 0.01 );
+	}
 
 	//Set the OrobitControls for our mouse to rotate the scene
 	const controls = new OrbitControls( camera, view1Elem );
