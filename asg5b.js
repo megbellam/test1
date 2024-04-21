@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 1"); //Use this to see if the correct file is being loaded
+console.log("Version 2"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -127,22 +127,6 @@ function main() {
 		gui.addColor( new ColorGUIHelper( amblight, 'color' ), 'value' ).name( 'Ambient color' );
 		gui.add( amblight, 'intensity', 0, 5, 0.01 ).name( 'Ambient intensity' );
 		scene.add( amblight );
-	}
-	
-	//Skybox - a background box that uses an image - in our case taken by a 360 degree camera
-	{
-
-		const loader = new THREE.TextureLoader();
-		const texture = loader.load(
-			'https://threejs.org/manual/examples/resources/images/equirectangularmaps/tears_of_steel_bridge_2k.jpg',
-			() => {
-
-				texture.mapping = THREE.EquirectangularReflectionMapping;
-				texture.colorSpace = THREE.SRGBColorSpace;
-				scene.background = texture;
-
-			} );
-
 	}
 
 	//Load the checkered Plane that forms the floor
@@ -341,6 +325,20 @@ function main() {
 
 	}
 
+	//Skybox - a background box that uses an image - in our case taken by a 360 degree camera
+	{
+		const loader = new THREE.TextureLoader();
+		const texture = loader.load(
+			'https://threejs.org/manual/examples/resources/images/equirectangularmaps/tears_of_steel_bridge_2k.jpg',
+			() => {
+
+				texture.mapping = THREE.EquirectangularReflectionMapping;
+				texture.colorSpace = THREE.SRGBColorSpace;
+				scene.background = texture;
+
+			} );
+	}
+
 	function resizeRendererToDisplaySize( renderer ) {
 
 		const canvas = renderer.domElement;
@@ -395,7 +393,13 @@ function main() {
 
 		time *= 0.001; // convert current time from milliseconds to seconds
 
-		resizeRendererToDisplaySize( renderer );
+		if ( resizeRendererToDisplaySize( renderer ) ) {
+
+			const canvas = renderer.domElement;
+			camera.aspect = canvas.clientWidth / canvas.clientHeight;
+			camera.updateProjectionMatrix();
+
+		}
 
 		// turn on the scissor
 		renderer.setScissorTest( true );
