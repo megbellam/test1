@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 1"); //Use this to see if the correct file is being loaded
+console.log("Version 2"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -416,7 +416,7 @@ function main() {
 			// don't draw the camera helper in the original view
 			cameraHelper.visible = false;
 
-			scene.background.set( 0x000000 );
+			//scene.background.set( 0x000000 );
 
 			//Set a different rotation for each of the cubes
 			cubes.forEach( ( cube, ndx ) => {
