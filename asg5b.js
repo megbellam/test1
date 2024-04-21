@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 2"); //Use this to see if the correct file is being loaded
+console.log("Version 1"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -100,7 +100,7 @@ function main() {
 
     //Create a scene for putting our cubes
 	const scene = new THREE.Scene();
-	scene.background = new THREE.Color( 'black' );
+	//scene.background = new THREE.Color( 'black' );
 	scene.add( cameraHelper );
 
 	
@@ -445,7 +445,7 @@ function main() {
 			// draw the camera helper in the 2nd view
 			cameraHelper.visible = true;
 
-			scene.background.set( 0x000040 );
+			//scene.background.set( 0x000040 );
 
 			renderer.render( scene, camera2 );
 
