@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-console.log("Version 3"); //Use this to see if the correct file is being loaded
+console.log("Version 4"); //Use this to see if the correct file is being loaded
 
 //As of version r147 the preferred way to use three.js is via es6 modules and import maps.
 //We have to setup the modules and imports in HTML and JS files
@@ -25,7 +25,7 @@ function main() {
 	const aspect = 2;
     //Camera param: Near and far give the space in front of the camera that will be rendered
     //Anything before or after that range will be clipped
-	const near = 0.1;
+	const near = 5;
 	const far = 100;
     //Create a Camera to display the scene
 	const camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
